@@ -32,13 +32,16 @@
 *.app
 *.bin
 
-# build folders
+
+# Build folders
 *cmake-build-*
-/CMakeFiles
-Makefile
+CMakeFiles/
+Makefile/
+build/
+
 
 # cmake files
-*.cmake
+# *.cmake
 
 # DEB packages
 *.deb
@@ -46,11 +49,17 @@ Makefile
 # install manifest
 install_manifest*
 
+# IDE folders
+# Jetbrains
+.idea
 # Code::Blocks project files
 *.cbp
 
-# Project Specific settings
-.idea
-
 # architecture precompiled file
 arch.c
+
+# Cmake swap
+/.CMakeLists.txt.swp
+
+# Testing folders
+Testing/
