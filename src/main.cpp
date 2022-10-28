@@ -18,7 +18,7 @@ using namespace Pack;
  * @return
  */
 int
-SumCpp11()
+variadicSum11()
 {
   return 0;
 }
@@ -26,9 +26,9 @@ SumCpp11()
 /// Variadic template for sum
 template <typename T1, typename... T>
 int
-SumCpp11(T1 s, T... ts)
+variadicSum11(T1 s, T... ts)
 {
-  return s + SumCpp11(ts...);
+  return s + variadicSum11(ts...);
 }
 
 /// Create an object of
@@ -36,7 +36,7 @@ SumCpp11(T1 s, T... ts)
 /// from an arbitrary number of arguments
 template <typename... Args>
 int
-doSomeWork(Args... args)
+variadicSum17(Args... args)
 {
   return (args + ...);  // Sum fold expressions since C++17
 }
@@ -44,37 +44,36 @@ doSomeWork(Args... args)
 /// Understand decltype (C++ 14 ?) no longer needed in C++17
 template <typename Container, typename Index>
 auto
-authAndAccess(Container&& container, Index index) -> decltype(std::forward<Container>(container)[index])
+getFromCollection(Container&& container, Index index) -> decltype(std::forward<Container>(container)[index])
 {
   //    authenticateUser();
   return std::forward<Container>(container)[index];
 }
 
 // Fold expressions since C++17
-template <typename... Args>
+template <typename... ArgsType>
 void
-FoldPrint(Args&&... args)
+printFoldExpression(ArgsType&&... args)
 {
-  (std::cout << ... << std::forward<Args>(args)) << '\n';
+  (std::cout << ... << std::forward<ArgsType>(args)) << '\n';
 }
 
 int
 main()
 {
   std::cout << "Hello, World!" << std::endl;
-  auto res = SumCpp11(1, 2, 3);
-  std::cout << "Result: " << res << std::endl;
-  auto r2 = doSomeWork(4, 5, 6);
-  std::cout << "Result2: " << r2 << std::endl;
 
-  // decltype
-  std::deque<int> d{ 1, 2, 3 };
-  int             index = 0;
-  auto            r3    = authAndAccess(d, index);
-  std::cout << "Result3: " << r3 << std::endl;
+  const auto            sum11Result = variadicSum11(1, 2, 3);
+  const auto            sum17Result = variadicSum17(4, 5, 6);
+  const std::deque<int> numbers{ 1, 2, 3 };
+  const std::uint32_t   index = 1;
+  const auto            item  = getFromCollection(numbers, index);
 
-  FoldPrint("print ", "something ", "nice ");
+  std::cout << "Sum result with c++11: " << sum11Result << std::endl;
+  std::cout << "Sum result with c++17: " << sum17Result << std::endl;
+  std::cout << "Item '" << index << "': " << item << std::endl;
 
+  printFoldExpression("print ", "something ", "nice ");
 
   auto result  = composeMessage20("message %1 %2 %3", "one", "two", "three");
   auto result2 = composeMessage11("message %1 %2 %3", "one", "two", "three");
